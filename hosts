@@ -1,0 +1,5 @@
+[server]
+[home]
+10.211.59.3
+[home:vars]
+ansible_user=hosein
