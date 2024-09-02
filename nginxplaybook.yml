@@ -1,0 +1,30 @@
+---
+- hosts: webservers
+  become: yes
+  become_user: hosein
+  roles:
+    - geerlingguy.nginx
+
+  vars:
+    nginx_vhosts:
+      - server_name: "example.com"
+        root: "/var/www/example.com"
+        listen: "80"
+        index: "index.html"
+        extra_parameters: |
+          location / {
+            try_files $uri $uri/ =404;
+          }
+
+    nginx_users:
+      - name: "admin"
+        password: "yourpassword"
+
+    nginx_remove_default_vhost: true
+
+    nginx_upstreams:
+      - name: my_app
+        servers:
+          - "127.0.0.1:8080"
+          - "127.0.0.1:8081"
+
